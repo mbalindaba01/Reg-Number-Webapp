@@ -1,38 +1,36 @@
- <h1>Greeting</h1>
-<section class="text">
-  <div class="counter-section">
-    <form id="nameInput" action="/name" method="POST">
-        <div class="name-container">
-          <p>Name <input type="text" name="name" id="name" /></p>
+<p class="error"></p>
+    <section class="container">
+        <form action="/reg" method="POST" class="input-fields">
+            <input type="text" name="reg" id="reg-number" placeholder="Registration Number">
+            <input type="submit" value="Add" id="add" name="add">
+        </form>
+        <div id="example">e.g CA00000</div>
+        <div class="radio-btns">
+            <div class="radio">
+                <input type="radio" value="Cape Town" id="town" name="town">
+                <label for="Cape Town">Cape Town</label>
+            </div>
+            <div class="radio">
+                <input type="radio" value="Bellville" id="town" name="town">
+                <label for="Bellville">Bellville</label>
+            </div>
+            <div class="radio">
+                <input type="radio" value="Paarl" id="town" name="town">
+                <label for="Paarl">Paarl</label>
+            </div>
+            <div class="radio">
+                <input type="radio" value="All" id="town" name="town">
+                <label for="Show All">Show All</label>
+            </div>
         </div>
-        <div class="radio-container">
-          <input type="radio" name="language" value="IsiZulu" />
-          <label for="language">IsiZulu</label>
-          <input type="radio" name="language" value="IsiXhosa" />
-          <label for="language">IsiXhosa</label>
-          <input type="radio" name="language" value="English" />
-          <label for="language">English</label>
+        <div class="submit-radio">
+            <input type="submit" id="remove" value="Show">
         </div>
-        <input type="submit" id="submit" value="Greet Me" />
-        <p class="counter">Counter: {{namesList}}</p>
-        {{#if message}}
-            <p class="greeting"></p>
-        {{else}}
-            <p class="greeting">{{greetText}}{{name}}</p>
-        {{/if}}
-    </form>
-  </div>
-  <div class="radio-section">
-    <form action="/counter" method="post">
-      <input type="submit" id="reset" value="Reset Counter" />
-    </form>
-    <form action="/greeted" method="post">
-      <input type="submit" id="greetList" value="Greeted Names" />
-    </form>
-  </div>
-  {{#if message}}
-  <div class="entry">
-    <h1>{{message}}</h1>
-  </div>
-{{/if}}
-</section>
+
+          <div class="reg">
+            {{#each regNums}}
+              {{}}
+            {{/each}}
+          </div>
+        <input type="button" value="Remove All Registration Numbers" id="removeAll">
+    </section>

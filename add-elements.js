@@ -1,5 +1,5 @@
-const AddElements = () => {
-    let regNum
+module.exports = (pool) => {
+    let regNum = ""
     let createdElem
     let appendParent
     let regNames = []
@@ -13,10 +13,7 @@ const AddElements = () => {
 
     const getReg = () => {
         return regNum
-    }
-
-    //set element 
-    
+    }    
 
     //set and get array of existing elements before removal
     const setElemArray = (elem) => {
