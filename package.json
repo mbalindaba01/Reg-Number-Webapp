@@ -22,6 +22,7 @@
   "homepage": "https://github.com/mbalindaba01/Reg-Number-Webapp#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "express-handlebars": "^5.3.4"
+    "express-handlebars": "^5.3.4",
+    "pg": "^8.7.1"
   }
 }

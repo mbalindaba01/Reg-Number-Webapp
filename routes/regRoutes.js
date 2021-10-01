@@ -1,24 +1,44 @@
-// const { Pool } = require('pg')
+const { Pool } = require('pg')
+
+//set up pool connection to database
+const pool = new Pool({
+  connectionString: "postgres://cwhhswjupzuarc:5ba8ee634f7bd51cd973cce81e2f0d67043624009e4fbeeac2f886f9c4178be6@ec2-44-198-146-224.compute-1.amazonaws.com:5432/d6i8sk85eq598a",
+  ssl: {
+    rejectUnauthorized: false
+  }
+})
 
 const AddElements = require('../add-elements')
-const addElements = AddElements()
+const addElements = AddElements(pool)
 
 module.exports = () => {
     const main = async (req, res) => {
+        let elems = await addElements.getElemArray()
+        let towns = await addElements.getTowns()
         res.render('index', {
-            regNums: addElements.getElemArray()
+        townNames: towns,
+        regNums: elems
         })
     }
 
     const reg = async(req, res) =>{
-        addElements.setElemArray(req.body.reg)
-        console.log(addElements.getElemArray())
+        addElements.setReg(req.body.reg)
+        console.log(addElements.getReg())
+        addElements.getTown(addElements.getReg())
+        await addElements.setTownRef()
+        await addElements.addReg()
+        res.redirect('/')
+    }
+
+    const show = async (req, res) => {
+        console.log(req.body.town)
         res.redirect('/')
     }
 
     return {
         main,
         reg,
+        show
         // counter,
         // greeted,
         // greetList

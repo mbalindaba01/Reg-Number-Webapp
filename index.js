@@ -43,6 +43,8 @@ app.get('/', routes.main)
 
 app.post('/reg', routes.reg)
 
+app.post('/show', routes.show)
+
 // //sets values for name, language uses and stores name of greeted person in database
 // app.post("/name", routes.names)
 
