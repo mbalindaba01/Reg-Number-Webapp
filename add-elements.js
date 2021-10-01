@@ -1,7 +1,5 @@
 module.exports = (pool) => {
     let regNum = ""
-    let createdElem
-    let appendParent
     let regNames = []
     let elemArray = []
     let errorText 
