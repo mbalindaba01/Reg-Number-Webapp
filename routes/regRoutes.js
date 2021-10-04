@@ -13,7 +13,7 @@ const addElements = AddElements(pool)
 
 module.exports = () => {
     const main = async (req, res) => {
-        let elems = await addElements.getElemArray()
+        let elems = await addElements.filter()
         let towns = await addElements.getTowns()
         res.render('index', {
         townNames: towns,
@@ -23,7 +23,6 @@ module.exports = () => {
 
     const reg = async(req, res) =>{
         addElements.setReg(req.body.reg)
-        console.log(addElements.getReg())
         addElements.getTown(addElements.getReg())
         await addElements.setTownRef()
         await addElements.addReg()
@@ -31,7 +30,8 @@ module.exports = () => {
     }
 
     const show = async (req, res) => {
-        console.log(req.body.town)
+        addElements.setChosenTown(req.body.town)
+        console.log(await addElements.filter())
         res.redirect('/')
     }
 
@@ -39,8 +39,5 @@ module.exports = () => {
         main,
         reg,
         show
-        // counter,
-        // greeted,
-        // greetList
     }
 }

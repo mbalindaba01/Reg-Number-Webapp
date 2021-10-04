@@ -5,6 +5,7 @@ module.exports = (pool) => {
     let errorText 
     let towns = []
     let townRef = 0
+    let filterState = "All"
 
     //set and get reg numbers
     const setReg = (num) => {
@@ -13,7 +14,7 @@ module.exports = (pool) => {
 
     const getReg = () => {
         return regNum
-    }    
+    } 
 
     //get the town that the reg number belongs to
     const getTown = (ref) => {
@@ -45,29 +46,29 @@ module.exports = (pool) => {
 
     //set and get array of existing reg numbers
     const getElemArray = async () => {
-        let arr = await pool.query("select reg_num from reg_numbers")
+        let arr = await pool.query("select * from reg_numbers")
         return arr.rows
     }
 
-    //set and get array of registration numbers entered by user
-    const setRegArray = (regNums) => {
-        regNames = regNums
-        regNames.push(regNum)
+    //set and get chosen town name to filter
+    const setChosenTown = (town) => {
+        filterState = town
     }
 
-    //get towns data
-    
-
-    const getRegArray = () => {
-        return regNames
+    const getChosenTown = () => {
+        return filterState
     }
 
-    const setError = (error) => {
-        errorText = error
-    }
-
-    const getError = () => {
-        return errorText
+    //filter through reg numbers 
+    const filter = async () => {
+        let allTowns = await getElemArray()
+        let selectedTowns 
+        if(getChosenTown() == 'All'){
+            selectedTowns = allTowns
+        }else{
+            selectedTowns = allTowns.filter(town => town.town_ref == getChosenTown())
+        }
+        return selectedTowns
     }
 
     return {
@@ -76,11 +77,10 @@ module.exports = (pool) => {
         addReg,
         setTownRef,
         getTown,
+        setChosenTown,
+        getChosenTown,
         getElemArray,
-        setRegArray,
-        getRegArray,
-        setError,
-        getError,
+        filter,
         getTowns
     }
 }
