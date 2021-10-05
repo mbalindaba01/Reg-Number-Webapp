@@ -1,32 +1,21 @@
-// const flash = require('express-flash')
-// const session = require('express-session')
+const flash = require('express-flash')
+const session = require('express-session')
 const express = require('express')
 const exphbs = require('express-handlebars')
-// const NamesGreeted = require('./namesGreeted')
-// const LanguagePicker = require('./languagePicker')
-// const { Pool } = require('pg')
- const Routes = require('./routes/regRoutes')
+const Routes = require('./routes/regRoutes')
 
 const app = express()
 const routes = Routes()
 
-// //set up pool connection to database
-// const pool = new Pool({
-//   connectionString: process.env.DATABASE_URL,
-//   ssl: {
-//     rejectUnauthorized: false
-//   }
-// })
+//initialise session middleware - flash-express depends on it
+app.use(session({
+  secret : "<add a secret string here>",
+  resave: false,
+  saveUninitialized: true
+}))
 
-// //initialise session middleware - flash-express depends on it
-// app.use(session({
-//   secret : "<add a secret string here>",
-//   resave: false,
-//   saveUninitialized: true
-// }))
-
-// // initialise the flash middleware
-// app.use(flash())
+// initialise the flash middleware
+app.use(flash())
 
 
 //set up middleware
@@ -44,6 +33,8 @@ app.get('/', routes.main)
 app.post('/reg', routes.reg)
 
 app.post('/show', routes.show)
+
+app.post('/remove', routes.remove)
 
 // //sets values for name, language uses and stores name of greeted person in database
 // app.post("/name", routes.names)

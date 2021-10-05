@@ -1,5 +1,11 @@
-<p class="error"></p>
     <section class="container">
+        <div class="error">
+            {{#if message}}
+                <div class="entry">
+                <h1>{{message}}</h1>
+                </div>
+            {{/if}}
+        </div>
         <form action="/reg" method="POST" class="input-fields">
             <input type="text" name="reg" id="reg-number" placeholder="Registration Number">
             <input type="submit" value="Add" id="add" name="add">
@@ -28,5 +34,7 @@
               <h2>{{reg_num}}</h2>
             {{/each}}
           </div>
-        <input type="button" value="Remove All Registration Numbers" id="removeAll">
+        <form action="/remove" method="post">
+            <input type="submit" value="Remove All Registration Numbers" id="removeAll">
+        </form>
     </section>

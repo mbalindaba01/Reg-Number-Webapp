@@ -87,7 +87,8 @@ div.submit-radio {
     width: 250px;
     display: flex;
     justify-content: center;
-    margin-top: 30px;
+    align-items: center;
+    width: 100%;
 }
 
 input {
@@ -102,12 +103,11 @@ input[type="radio"]{
     width: 200px;
 }
 
-input[type="button"]{
-    background: #001214;
+#removeAll {
+    background: hsl(186, 100%, 4%);
     color: #eee;
-    height: 40px;
+    width: 300px;
     font-size: 14px;
-    display: none;
 }
 
 input[type="submit"] {
@@ -126,7 +126,7 @@ input[type="submit"] {
 }
 
 input#remove {
-    width: 250px;
+    width: 300px;
 }
 
 .error {
@@ -139,6 +139,9 @@ input#remove {
     display: flex;
     align-items: center;
     justify-content: center;
+    font-weight: 100;
+    font-size: 1rem;
+    animation: cssAnimation 0s ease-in 3s forwards;
 }
 
 #example {
@@ -172,4 +175,12 @@ input#remove {
         width: 100%;
     }
 
+}
+
+@keyframes cssAnimation {
+    to {
+        width:0;
+        height:0;
+        overflow:hidden;
+    }
 }

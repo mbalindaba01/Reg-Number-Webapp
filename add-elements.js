@@ -50,6 +50,11 @@ module.exports = (pool) => {
         return arr.rows
     }
 
+    const regExists = async () => {
+        let counter = await pool.query("select count(reg_num) from reg_numbers where reg_num = $1", [getReg()])
+        return counter.rows[0].count
+    }
+
     //set and get chosen town name to filter
     const setChosenTown = (town) => {
         filterState = town
@@ -71,6 +76,17 @@ module.exports = (pool) => {
         return selectedTowns
     }
 
+    const countReg = async () => {
+        let allReg = await getElemArray()
+        let selectedReg
+        if(getChosenTown() == 'All'){
+            selectedReg = allReg
+        }else{
+            selectedReg = allReg.filter(town => town.town_ref == getChosenTown())
+        }
+        return selectedReg.length
+    }
+
     return {
         setReg,
         getReg,
@@ -81,6 +97,8 @@ module.exports = (pool) => {
         getChosenTown,
         getElemArray,
         filter,
-        getTowns
+        getTowns,
+        regExists,
+        countReg
     }
 }
