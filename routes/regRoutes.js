@@ -9,9 +9,9 @@ if(process.env.DATABASE_URL && !local){
 //set up pool connection to database
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL || "postgresql://postgres:Minenhle!28@localhost:5432/registration_numbers",
-//   ssl: {
-//     rejectUnauthorized: false
-//   }
+  ssl: {
+    rejectUnauthorized: false
+  }
 })
 
 const AddElements = require('../add-elements')
