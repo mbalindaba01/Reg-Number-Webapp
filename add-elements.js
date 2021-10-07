@@ -4,7 +4,7 @@ module.exports = (pool) => {
     let elemArray = []
     let errorText 
     let towns = []
-    let townRef = 0
+    let townRef
     let filterState = "All"
 
     //set and get reg numbers
@@ -55,6 +55,11 @@ module.exports = (pool) => {
         return counter.rows[0].count
     }
 
+    const getRegFromDb = async () => {
+        let reg = await pool.query("select reg_num from reg_numbers where reg_num = $1", [getReg()])
+        return reg.rows[0].reg_num
+    }
+
     //set and get chosen town name to filter
     const setChosenTown = (town) => {
         filterState = town
@@ -87,6 +92,15 @@ module.exports = (pool) => {
         return selectedReg.length
     }
 
+    const getcount = async () => {
+        let counter = await pool.query("select count (*) from reg_numbers")
+        return counter.rows[0].count
+    }
+
+    const removeReg = async () => {
+        await pool.query("truncate reg_numbers")
+    }
+
     return {
         setReg,
         getReg,
@@ -99,6 +113,9 @@ module.exports = (pool) => {
         filter,
         getTowns,
         regExists,
-        countReg
+        countReg, 
+        getRegFromDb,
+        removeReg,
+        getcount
     }
 }

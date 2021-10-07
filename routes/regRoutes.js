@@ -9,9 +9,9 @@ if(process.env.DATABASE_URL && !local){
 //set up pool connection to database
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL || "postgresql://postgres:Minenhle!28@localhost:5432/registration_numbers",
-  ssl: {
-    rejectUnauthorized: false
-  }
+//   ssl: {
+//     rejectUnauthorized: false
+//   }
 })
 
 const AddElements = require('../add-elements')
@@ -47,6 +47,7 @@ module.exports = () => {
         addElements.getTown(addElements.getReg())
         await addElements.setTownRef()
         await addElements.addReg()
+        await addElements.getRegFromDb()
         res.redirect('/')
         }
     }
@@ -61,7 +62,7 @@ module.exports = () => {
     }
 
     const remove = async (req, res) => {
-        pool.query("truncate reg_numbers")
+        addElements.removeReg()
         res.redirect('/')
     }
 

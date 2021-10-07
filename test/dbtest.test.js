@@ -3,14 +3,18 @@ const AddElements = require('../add-elements')
 const pg = require("pg")
 const Pool = pg.Pool
 
+let useSSL = false
+let local = process.env.local || false
+if(process.env.DATABASE_URL && !local){
+    useSSL = true
+}
 
 const pool = new Pool({
-    user: 'postgres',
-    host: 'localhost',
-    database: 'reg_tests',
-    password: 'Minenhle!28',
-    port: 5432,
-})
+    connectionString: process.env.DATABASE_URL || "postgresql://postgres:Minenhle!28@localhost:5432/reg_tests",
+    // ssl: {
+    //   rejectUnauthorized: false
+    // }
+  })
 
 let addElements = AddElements(pool)
 
@@ -23,9 +27,19 @@ describe('The database', function () {
     })
 
     it('should be able to set the town that the reg number belongs to', async () => {
-        addElements.getTown("CA000000")
-        assert.equal("Cape Town", await addElements.setTownRef())
-    });
+        addElements.setReg("CA001100")
+        addElements.getTown(addElements.getReg())
+        assert.equal(1, await addElements.setTownRef())
+    })
+
+    it('should be able to save the reg number and town reference number put in by the user to the database', async () => {
+        addElements.setReg("CA00000")
+        addElements.getTown(addElements.getReg())
+        addElements.addReg()
+        assert.deepEqual("CA00000", await addElements.getRegFromDb())
+    })
+
+    
 
     // it('should be able to set names and get them from database', async () => {
     //     await namesGreeted.setName("Mbali")
@@ -38,17 +52,31 @@ describe('The database', function () {
     //     assert.equal(2, await namesGreeted.greetCount())
     // });
 
-    // it('should test duplication in the database', async () => {
-    //     await namesGreeted.setName("Yonela")
-    //     await namesGreeted.setName("yoNela")
-    //     assert.equal(1, await namesGreeted.nameCount())
-    // });
+    it('should be able to return the list of towns available to choose from', async () => {
+        await addElements.getTowns()
+        assert.deepEqual([
+            {
+              town_id: 1,
+              town_name: 'Cape Town'
+            },
+            {
+              town_id: 2,
+              town_name: 'Bellville'
+            },
+            {
+              town_id: 3,
+              town_name: 'Paarl'
+            }
+          ], await addElements.getTowns())
+    });
 
-    // it('should be able to reset the database', async () => {
-    //     await namesGreeted.setName("Mbali")
-    //     namesGreeted.removeNames()
-    //     assert.equal(0, await namesGreeted.nameCount())
-    // });
+    it('should be able to reset the database', async () => {
+        addElements.setReg("CA00000")
+        addElements.getTown(addElements.getReg())
+        await addElements.addReg()
+        addElements.removeReg()
+        assert.deepEqual(0, await addElements.getcount())
+    });
 
     after(() => {
         pool.end();
