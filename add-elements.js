@@ -18,9 +18,9 @@ module.exports = (pool) => {
         if(ref.startsWith('CA')) {
             return "Cape Town"
         }else if(ref.startsWith('CY')){
-            return "Paarl"
-        }else if(ref.startsWith('CJ')){
             return "Bellville"
+        }else if(ref.startsWith('CJ')){
+            return "Paarl"
         }
     }
 
