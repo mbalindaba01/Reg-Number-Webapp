@@ -1,15 +1,12 @@
 module.exports = (pool) => {
     let regNum = ""
-    let regNames = []
-    let elemArray = []
-    let errorText 
     let towns = []
     let townRef
     let filterState = "All"
 
     //set and get reg numbers
     const setReg = (num) => {
-        regNum = num.toUpperCase().replace(/ /g, '')
+        regNum = num.toUpperCase().replace(/[^a-zA-Z0-9]/g, '')
     }
 
     const getReg = () => {
