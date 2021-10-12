@@ -1,11 +1,5 @@
 const { Pool } = require('pg')
 
-// let useSSL = false
-// let local = process.env.local || false
-// if(process.env.DATABASE_URL && !local){
-//     useSSL = true
-// }
-
 //set up pool connection to database
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL || "postgresql://postgres:Minenhle!28@localhost:5432/registration_numbers",
@@ -37,9 +31,6 @@ module.exports = () => {
         }else if(!(addElements.getReg().startsWith("CA") || addElements.getReg().startsWith("CY") || addElements.getReg().startsWith("CJ"))){
             req.flash('warning', 'Please enter registration number from Cape Town, Paarl or Bellville')
             res.redirect("/")
-        }else if(!digits.match('^[0-9]+$') || addElements.getReg().length > 10){
-            req.flash('warning', 'Please enter valid registration number')
-            res.redirect('/')
         }else if(await addElements.regExists() > 0){
             req.flash('warning', 'Registration number already exists')
             res.redirect('/')

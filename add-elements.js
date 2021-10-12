@@ -6,7 +6,7 @@ module.exports = (pool) => {
 
     //set and get reg numbers
     const setReg = (num) => {
-        regNum = num.toUpperCase().replace(/[^a-zA-Z0-9]/g, '')
+        regNum = num.toUpperCase().replace(/^\d([- ]*\d){8,12}$/, '')
     }
 
     const getReg = () => {
